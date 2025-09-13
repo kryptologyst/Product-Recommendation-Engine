@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guitar Recommendation Engine</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #3a3a3a;
+            --secondary-color: #f4f4f4;
+            --accent-color: #007bff;
+            --background-color: #ffffff;
+            --text-color: #333333;
+            --border-radius: 12px;
+            --shadow: 0 10px 20px rgba(0,0,0,0.08);
+        }
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 2em;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+        .container {
+            background: var(--background-color);
+            padding: 2.5em;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            width: 100%;
+            max-width: 700px;
+            transition: all 0.3s ease;
+        }
+        h1 {
+            color: var(--primary-color);
+            text-align: center;
+            font-weight: 700;
+            margin-bottom: 1em;
+        }
+        h2 {
+            color: var(--primary-color);
+            font-weight: 400;
+            text-align: center;
+            margin-bottom: 1.5em;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 0.5em;
+        }
+        form {
+            margin-bottom: 2.5em;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5em;
+        }
+        label {
+            font-weight: 400;
+            color: #555;
+        }
+        select, button {
+            padding: 1em;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 1em;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        select {
+            appearance: none;
+            background: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23007CB2%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E') no-repeat right .7em top 50%, #fff;
+            background-size: .65em auto;
+        }
+        button {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: 700;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        button:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+        .recommendations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5em;
+        }
+        .card {
+            background: #fdfdfd;
+            border: 1px solid #eee;
+            border-radius: var(--border-radius);
+            padding: 1.5em;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-align: center;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        }
+        .card h3 {
+            margin: 0 0 0.5em 0;
+            color: var(--primary-color);
+            font-weight: 400;
+        }
+        .card .score {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: var(--accent-color);
+        }
+        .card .score-label {
+            font-size: 0.8em;
+            color: #777;
+            margin-top: 0.5em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Guitar Recommendation Engine</h1>
+        <form method="POST">
+            <div class="form-group">
+                <label for="product">Choose a guitar to get recommendations:</label>
+                <select name="product" id="product">
+                    {% for product in products %}
+                        <option value="{{ product }}" {% if product == selected_product %}selected{% endif %}>{{ product }}</option>
+                    {% endfor %}
+                </select>
+                <button type="submit">Get Recommendations</button>
+            </div>
+        </form>
+
+        {% if recommendations is not none %}
+            <div class="recommendations">
+                <h2>Recommendations for {{ selected_product }}</h2>
+                <div class="recommendations-grid">
+                    {% for product, score in recommendations.items() %}
+                        <div class="card">
+                            <h3>{{ product }}</h3>
+                            <p class="score">{{ '%.2f'|format(score) }}</p>
+                            <p class="score-label">Similarity Score</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
