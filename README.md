@@ -2,6 +2,8 @@
 
 This project is a simple product recommendation engine that uses collaborative filtering to suggest items to users based on their past behavior. The engine is built with Python, Pandas, and Scikit-learn, and it uses a Flask web interface to provide an interactive user experience.
 
+<img width="794" height="853" alt="Screenshot 2025-09-11 at 8 03 08 PM" src="https://github.com/user-attachments/assets/670edf01-d664-4fd8-b2f2-04db1f86ea80" />
+
 ## Features
 
 - **Collaborative Filtering**: Recommends products based on user-item interaction data.
@@ -40,4 +42,3 @@ This project is a simple product recommendation engine that uses collaborative f
 - `templates/index.html`: The HTML template for the web interface.
 - `requirements.txt`: A list of the project's Python dependencies.
 - `.gitignore`: Specifies which files and directories to ignore in the Git repository.
-# Product-Recommendation-Engine
